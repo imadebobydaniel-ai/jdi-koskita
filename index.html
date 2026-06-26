@@ -273,7 +273,7 @@
             }
         }
 
-        /* Hero Content */
+        /* Hero Content - Lebar penuh tanpa video di kanan */
         .hero-content {
             position: relative;
             z-index: 2;
@@ -281,20 +281,19 @@
             max-width: 1300px;
             padding: 40px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            gap: 50px;
         }
 
         .hero-text {
-            flex: 1;
-            max-width: 580px;
+            max-width: 750px;
             color: white;
             animation: fadeInUp 1s ease;
+            text-align: center;
         }
 
         .hero-text h1 {
-            font-size: 50px;
+            font-size: 55px;
             margin-bottom: 12px;
             line-height: 1.15;
         }
@@ -304,23 +303,27 @@
         }
 
         .hero-text .subtitle {
-            font-size: 20px;
+            font-size: 22px;
             line-height: 34px;
             margin-bottom: 10px;
             opacity: 0.92;
         }
 
         .hero-text .description {
-            font-size: 16px;
+            font-size: 17px;
             line-height: 28px;
             opacity: 0.8;
             margin-bottom: 28px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .btn-group {
             display: flex;
             gap: 14px;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .btn {
@@ -357,58 +360,132 @@
             border-color: white;
         }
 
+        /* Tombol Download Playstore */
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #34A853;
+            color: white;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            transition: 0.3s;
+            font-weight: 700;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(52, 168, 83, 0.35);
+        }
+
+        .btn-download:hover {
+            background: #2d9248;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(52, 168, 83, 0.45);
+        }
+
+        .btn-download .play-icon {
+            font-size: 28px;
+        }
+
+        .btn-download .btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.2;
+        }
+
+        .btn-download .btn-text .small {
+            font-size: 10px;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .btn-download .btn-text .big {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
         /* ============================================================
-                   VIDEO PLAYER (Hero Kanan)
+                   VIDEO POPUP MODAL (Setengah Layar)
                    ============================================================ */
-        .hero-video {
-            width: 480px;
-            flex-shrink: 0;
-            animation: fadeInUp 1s ease 0.2s both;
+        .video-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            padding: 20px;
         }
 
-        .hero-video .video-wrapper {
+        .video-modal-overlay.show {
+            display: flex;
+        }
+
+        .video-modal-content {
             position: relative;
-            border-radius: 18px;
+            width: 100%;
+            max-width: 800px;
+            background: #000;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-            background: #0A2E6D;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+            animation: modalFadeIn 0.4s ease;
         }
 
-        .hero-video video {
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .video-modal-content video {
             width: 100%;
             display: block;
-            border-radius: 18px;
+            max-height: 80vh;
+            background: #000;
         }
 
-        .video-play-btn {
+        .video-modal-close {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 72px;
-            height: 72px;
-            background: rgba(255, 122, 0, 0.92);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            top: 12px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            color: #fff;
+            font-size: 28px;
             cursor: pointer;
+            padding: 4px 14px;
+            border-radius: 8px;
             transition: 0.3s;
-            border: 3px solid rgba(255, 255, 255, 0.25);
+            z-index: 10;
+            line-height: 1.4;
+        }
+
+        .video-modal-close:hover {
+            background: rgba(255, 0, 0, 0.7);
+            transform: scale(1.1);
+        }
+
+        .video-modal-title {
+            position: absolute;
+            bottom: 16px;
+            left: 20px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 6px 16px;
+            border-radius: 20px;
             backdrop-filter: blur(4px);
-        }
-
-        .video-play-btn:hover {
-            transform: translate(-50%, -50%) scale(1.12);
-            background: #FF7A00;
-        }
-
-        .video-play-btn::after {
-            content: "▶";
-            color: white;
-            font-size: 30px;
-            margin-left: 6px;
         }
 
         /* ============================================================
@@ -642,14 +719,11 @@
                    RESPONSIVE
                    ============================================================ */
         @media (max-width: 1024px) {
-            .hero-content {
-                gap: 30px;
-            }
-            .hero-video {
-                width: 400px;
-            }
             .hero-text h1 {
                 font-size: 44px;
+            }
+            .hero-text .subtitle {
+                font-size: 20px;
             }
         }
 
@@ -678,21 +752,16 @@
                 padding: 30px 20px;
             }
 
-            .hero-video {
-                width: 100%;
-                max-width: 500px;
-            }
-
-            .hero-text {
-                max-width: 100%;
-            }
-
             .hero-text h1 {
                 font-size: 38px;
             }
 
             .hero-text .subtitle {
                 font-size: 18px;
+            }
+
+            .hero-text .description {
+                font-size: 15px;
             }
 
             .btn-group {
@@ -711,6 +780,10 @@
             .card-container {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 20px;
+            }
+
+            .video-modal-content {
+                max-width: 95%;
             }
         }
 
@@ -759,6 +832,10 @@
             }
             .hero-slider .slide:nth-child(6) {
                 animation-delay: 20s;
+            }
+
+            .video-modal-content video {
+                max-height: 60vh;
             }
         }
 
@@ -832,6 +909,19 @@
                 align-items: stretch;
             }
 
+            .btn-download {
+                justify-content: center;
+                padding: 12px 24px;
+            }
+
+            .btn-download .play-icon {
+                font-size: 24px;
+            }
+
+            .btn-download .btn-text .big {
+                font-size: 14px;
+            }
+
             .features-header h2 {
                 font-size: 26px;
             }
@@ -853,15 +943,23 @@
                 font-size: 13px;
             }
 
-            .hero-video .video-wrapper {
+            .video-modal-content {
+                max-width: 100%;
                 border-radius: 12px;
             }
-            .video-play-btn {
-                width: 56px;
-                height: 56px;
-            }
-            .video-play-btn::after {
+
+            .video-modal-close {
+                top: 8px;
+                right: 10px;
                 font-size: 22px;
+                padding: 2px 12px;
+            }
+
+            .video-modal-title {
+                font-size: 12px;
+                bottom: 10px;
+                left: 12px;
+                padding: 4px 12px;
             }
         }
 
@@ -879,7 +977,7 @@
 <body>
 
     <!-- ============================================================
-    HEADER
+    HEADER - SEMUA LINK SUDAH DIPERBAIKI
     ============================================================ -->
     <header>
         <div class="header-container">
@@ -899,15 +997,14 @@
                 <span></span>
             </div>
 
-            <!-- Navigation - LINK FASILITAS SUDAH DIPERBAIKI -->
+            <!-- Navigation - SEMUA LINK SUDAH DIPERBAIKI -->
             <nav class="nav-menu" id="navMenu">
                 <a href="index.html">Beranda</a>
                 <a href="cek-in.html">Cek-in</a>
                 <a href="galeri.html">Galeri</a>
                 <a href="fasilitas.html">Fasilitas</a>
-                <a href="#">Daftar Harga</a>
-                <a href="#">Upload Pembayaran</a>
-                <a href="#">Kontak</a>
+                <a href="daftar-harga.html">Daftar Harga</a>
+                <a href="kontak.html">Kontak</a>
                 <a href="#" class="btn-login">Login Tamu</a>
                 <a href="#" class="btn-login">Login Admin</a>
             </nav>
@@ -945,7 +1042,7 @@
             <span class="dot"></span>
         </div>
 
-        <!-- Hero Content -->
+        <!-- Hero Content - TANPA VIDEO PLAYER -->
         <div class="hero-content">
             <div class="hero-text">
                 <h1>Selamat Datang di<br /><span class="highlight">JDI KOSKITA</span></h1>
@@ -956,22 +1053,33 @@
                     cepat, dan aman.
                 </p>
                 <div class="btn-group">
-                    <a href="#" class="btn">Masuk Dashboard</a>
-                    <a href="#" class="btn btn-outline">Lihat Video</a>
-                </div>
-            </div>
-
-            <div class="hero-video">
-                <div class="video-wrapper">
-                    <video controls poster="assets/kost1.jpg">
-                        <source src="assets/video/jdiiklan.mp4" type="video/mp4" />
-                        Browser Anda tidak mendukung video.
-                    </video>
-                    <div class="video-play-btn" id="playBtn"></div>
+                    <!-- Tombol Download Playstore - GANTI -->
+                    <a href="#" class="btn-download" id="btnDownloadPlaystore">
+                        <span class="play-icon">▶</span>
+                        <span class="btn-text">
+                            <span class="small">GET IT ON</span>
+                            <span class="big">Google Play</span>
+                        </span>
+                    </a>
+                    <a href="#" class="btn btn-outline" id="btnWatchVideo">▶ Lihat Video</a>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- ============================================================
+    VIDEO POPUP MODAL
+    ============================================================ -->
+    <div class="video-modal-overlay" id="videoModal">
+        <div class="video-modal-content">
+            <button class="video-modal-close" id="closeVideoModal">✕</button>
+            <video id="modalVideo" controls>
+                <source src="assets/video/jdiiklan.mp4" type="video/mp4" />
+                Browser Anda tidak mendukung video.
+            </video>
+            <div class="video-modal-title">🎬 Video Profil JDI KOSKITA</div>
+        </div>
+    </div>
 
     <!-- ============================================================
     FEATURES (Floating Cards)
@@ -1028,7 +1136,7 @@
     </section>
 
     <!-- ============================================================
-    FOOTER
+    FOOTER - SEMUA LINK SUDAH DIPERBAIKI
     ============================================================ -->
     <footer>
         <div class="footer-brand">JDI <span>KOSKITA</span></div>
@@ -1040,9 +1148,8 @@
             <a href="cek-in.html">Cek-in</a>
             <a href="galeri.html">Galeri</a>
             <a href="fasilitas.html">Fasilitas</a>
-            <a href="#">Daftar Harga</a>
-            <a href="#">Upload Pembayaran</a>
-            <a href="#">Kontak</a>
+            <a href="daftar-harga.html">Daftar Harga</a>
+            <a href="kontak.html">Kontak</a>
         </div>
     </footer>
 
@@ -1081,37 +1188,70 @@
             });
 
             // ============================================
-            // 2. VIDEO PLAY BUTTON
+            // 2. VIDEO POPUP MODAL
             // ============================================
-            const playBtn = document.getElementById('playBtn');
-            const video = document.querySelector('.hero-video video');
+            const btnWatchVideo = document.getElementById('btnWatchVideo');
+            const videoModal = document.getElementById('videoModal');
+            const closeVideoModal = document.getElementById('closeVideoModal');
+            const modalVideo = document.getElementById('modalVideo');
 
-            if (playBtn && video) {
-                playBtn.addEventListener('click', function() {
-                    if (video.paused) {
-                        video.play();
-                        playBtn.style.opacity = '0';
-                    } else {
-                        video.pause();
-                        playBtn.style.opacity = '1';
-                    }
+            // Buka modal saat tombol "Lihat Video" diklik
+            if (btnWatchVideo) {
+                btnWatchVideo.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    videoModal.classList.add('show');
+                    modalVideo.load();
+                    // Play video setelah modal muncul
+                    setTimeout(function() {
+                        modalVideo.play().catch(function(err) {
+                            console.log('Autoplay tidak diizinkan oleh browser:', err);
+                        });
+                    }, 300);
+                    document.body.style.overflow = 'hidden';
                 });
+            }
 
-                video.addEventListener('play', function() {
-                    playBtn.style.opacity = '0';
-                });
+            // Tutup modal
+            function closeModal() {
+                videoModal.classList.remove('show');
+                modalVideo.pause();
+                modalVideo.currentTime = 0;
+                document.body.style.overflow = '';
+            }
 
-                video.addEventListener('pause', function() {
-                    playBtn.style.opacity = '1';
-                });
+            if (closeVideoModal) {
+                closeVideoModal.addEventListener('click', closeModal);
+            }
 
-                video.addEventListener('ended', function() {
-                    playBtn.style.opacity = '1';
+            // Tutup modal saat klik di luar konten
+            videoModal.addEventListener('click', function(e) {
+                if (e.target === videoModal) {
+                    closeModal();
+                }
+            });
+
+            // Tutup modal dengan tombol ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && videoModal.classList.contains('show')) {
+                    closeModal();
+                }
+            });
+
+            // ============================================
+            // 3. TOMBOL DOWNLOAD PLAYSTORE
+            // ============================================
+            const btnDownload = document.getElementById('btnDownloadPlaystore');
+            if (btnDownload) {
+                btnDownload.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Ganti dengan link Playstore yang sebenarnya
+                    // window.open('https://play.google.com/store/apps/details?id=com.jdikoskita.app', '_blank');
+                    alert('🔗 Link Download Playstore akan diarahkan ke aplikasi JDI KOSKITA di Google Play Store.\n\nSilahkan ganti link dengan URL Playstore yang sebenarnya.');
                 });
             }
 
             // ============================================
-            // 3. HAMBURGER MENU (Mobile)
+            // 4. HAMBURGER MENU (Mobile)
             // ============================================
             const hamburger = document.getElementById('hamburger');
             const navMenu = document.getElementById('navMenu');
@@ -1132,7 +1272,7 @@
             }
 
             // ============================================
-            // 4. PRELOAD GAMBAR AGAR SLIDER SMOOTH
+            // 5. PRELOAD GAMBAR AGAR SLIDER SMOOTH
             // ============================================
             const images = [
                 'assets/kost1.jpg',
@@ -1150,6 +1290,8 @@
 
             console.log('✅ JDI KOSKITA - Slider dengan 6 gambar siap!');
             console.log('📸 Gambar: kost1.jpg - kost6.jpg');
+            console.log('🎬 Video popup siap diklik tombol "Lihat Video"');
+            console.log('📱 Tombol Download Playstore siap digunakan!');
 
         })();
     </script>

@@ -884,12 +884,81 @@
                 display: none !important;
             }
         }
+
+        /* ============================================================
+           LOADING SPINNER
+           ============================================================ */
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+            grid-column: 1 / -1;
+        }
+
+        .loading-spinner .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e9edf2;
+            border-top-color: #FF7A00;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-spinner p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* Error State */
+        .error-state {
+            text-align: center;
+            padding: 40px 20px;
+            grid-column: 1 / -1;
+        }
+
+        .error-state .error-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .error-state h4 {
+            color: #dc3545;
+            font-size: 18px;
+        }
+
+        .error-state p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .error-state .btn-retry {
+            margin-top: 12px;
+            padding: 8px 28px;
+            background: #FF7A00;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .error-state .btn-retry:hover {
+            background: #e06a00;
+        }
     </style>
 </head>
 <body>
 
     <!-- ============================================================
-    HEADER
+    HEADER - MENU UPLOAD PEMBAYARAN TELAH DIHAPUS
     ============================================================ -->
     <header>
         <div class="header-container">
@@ -907,13 +976,13 @@
                 <span></span>
             </div>
 
+            <!-- ✅ MENU UPLOAD PEMBAYARAN DIHAPUS -->
             <nav class="nav-menu" id="navMenu">
                 <a href="index.html">Beranda</a>
                 <a href="cek-in.html">Cek-in</a>
                 <a href="galeri.html">Galeri</a>
                 <a href="fasilitas.html" class="active">Fasilitas</a>
                 <a href="#">Daftar Harga</a>
-                <a href="#">Upload Pembayaran</a>
                 <a href="#">Kontak</a>
                 <a href="#" class="btn-login">Login Tamu</a>
                 <a href="#" class="btn-login">Login Admin</a>
@@ -1037,36 +1106,53 @@
     </section>
 
     <!-- ============================================================
-    FOOTER
+    FOOTER - MENU UPLOAD PEMBAYARAN TELAH DIHAPUS
     ============================================================ -->
     <footer>
         <div class="footer-brand">JDI <span>KOSKITA</span></div>
         <p>Smart Boarding House Management System</p>
         <div class="footer-divider"></div>
         <p>&copy; 2026 JDI KOSKITA. All Rights Reserved.</p>
+        <!-- ✅ MENU UPLOAD PEMBAYARAN DIHAPUS -->
         <div class="footer-links">
             <a href="index.html">Beranda</a>
             <a href="cek-in.html">Cek-in</a>
             <a href="galeri.html">Galeri</a>
             <a href="fasilitas.html">Fasilitas</a>
             <a href="#">Daftar Harga</a>
-            <a href="#">Upload Pembayaran</a>
             <a href="#">Kontak</a>
         </div>
     </footer>
 
     <!-- ============================================================
-    JAVASCRIPT - CMS READY
+    JAVASCRIPT - CMS READY WITH API
     ============================================================ -->
     <script>
         (function() {
             'use strict';
 
             // ============================================================
-            // 📊 FASILITAS DATA (CMS Ready)
+            // 🔧 API CONFIGURATION
             // ============================================================
-            const FASILITAS_DATA = {
-                // Ringkasan Cepat
+            const API_CONFIG = {
+                // Ganti dengan URL API Anda
+                baseUrl: 'https://api.jdikoskita.com/v1',
+                endpoints: {
+                    facilities: '/facilities',
+                    roomTypes: '/room-types',
+                    testimonials: '/testimonials',
+                    location: '/location'
+                },
+                // Untuk development, gunakan data lokal
+                useLocalData: true,
+                // Timeout untuk fetch (ms)
+                timeout: 10000
+            };
+
+            // ============================================================
+            // 📊 LOCAL DATA (Fallback jika API tidak tersedia)
+            // ============================================================
+            const LOCAL_DATA = {
                 summary: {
                     totalRooms: 22,
                     totalBathrooms: 12,
@@ -1074,14 +1160,12 @@
                     parkingCapacity: 20,
                     cctv: '24 Jam'
                 },
-
-                // Tipe Kamar
                 roomTypes: [{
                     id: 'standard',
                     name: 'Standard',
                     price: 500000,
-                    icon: '🛏️',
-                    image: 'assets/img/room-standard.jpg',
+                    icon: 'https://api.iconify.design/emojione/bed.svg',
+                    image: 'https://via.placeholder.com/400x300/0A2E6D/FFFFFF?text=Kamar+Standard',
                     facilities: [
                         { icon: '❄️', name: 'AC' },
                         { icon: '🪑', name: 'Meja Belajar' },
@@ -1095,8 +1179,8 @@
                     id: 'deluxe',
                     name: 'Deluxe',
                     price: 650000,
-                    icon: '🛋️',
-                    image: 'assets/img/room-deluxe.jpg',
+                    icon: 'https://api.iconify.design/emojione/luxury-hotel.svg',
+                    image: 'https://via.placeholder.com/400x300/FF7A00/FFFFFF?text=Kamar+Deluxe',
                     facilities: [
                         { icon: '❄️', name: 'AC' },
                         { icon: '📺', name: 'TV 32"' },
@@ -1111,8 +1195,8 @@
                     id: 'vip',
                     name: 'VIP',
                     price: 850000,
-                    icon: '👑',
-                    image: 'assets/img/room-vip.jpg',
+                    icon: 'https://api.iconify.design/emojione/crown.svg',
+                    image: 'https://via.placeholder.com/400x300/1a1a2e/FFFFFF?text=Kamar+VIP',
                     facilities: [
                         { icon: '❄️', name: 'AC' },
                         { icon: '📺', name: 'TV 42"' },
@@ -1126,172 +1210,141 @@
                     popular: false,
                     description: 'Kamar VIP premium dengan fasilitas terbaik dan view kota.'
                 }],
-
-                // Fasilitas Properti
-                propertyFacilities: [{
-                    id: 'ruang-tamu',
-                    name: 'Ruang Tamu',
-                    icon: '🛋️',
-                    description: 'Ruang tamu luas dengan sofa dan TV',
-                    available: true
-                }, {
-                    id: 'dapur',
-                    name: 'Dapur Bersama',
-                    icon: '🍽️',
-                    description: 'Dapur dengan peralatan lengkap',
-                    available: true
-                }, {
-                    id: 'laundry',
-                    name: 'Laundry Service',
-                    icon: '🧺',
-                    description: 'Mesin cuci dan pengering',
-                    available: true
-                }, {
-                    id: 'parkir',
-                    name: 'Parkir Luas',
-                    icon: '🅿️',
-                    description: 'Area parkir yang aman',
-                    available: true
-                }, {
-                    id: 'cctv',
-                    name: 'CCTV 24 Jam',
-                    icon: '🔒',
-                    description: 'Keamanan 24 jam dengan CCTV',
-                    available: true
-                }, {
-                    id: 'wifi',
-                    name: 'WiFi Cepat',
-                    icon: '📶',
-                    description: 'WiFi 100 Mbps untuk semua penghuni',
-                    available: true
-                }, {
-                    id: 'gym',
-                    name: 'Gym / Fitness',
-                    icon: '🏋️',
-                    description: 'Peralatan gym lengkap',
-                    available: false
-                }, {
-                    id: 'taman',
-                    name: 'Taman',
-                    icon: '🌳',
-                    description: 'Taman hijau untuk relaksasi',
-                    available: true
-                }],
-
-                // Fasilitas Umum Terdekat
-                nearbyFacilities: [{
-                    id: 'rs',
-                    name: 'Rumah Sakit',
-                    icon: '🏥',
-                    distance: '5 menit',
-                    address: 'RS. Hasan Sadikin'
-                }, {
-                    id: 'supermarket',
-                    name: 'Supermarket',
-                    icon: '🛒',
-                    distance: '10 menit',
-                    address: 'Indomaret / Alfamart'
-                }, {
-                    id: 'kampus',
-                    name: 'Kampus',
-                    icon: '🎓',
-                    distance: '15 menit',
-                    address: 'UNPAD / ITB'
-                }, {
-                    id: 'halte',
-                    name: 'Halte Bus',
-                    icon: '🚌',
-                    distance: '5 menit',
-                    address: 'Halte Cisitu'
-                }, {
-                    id: 'stasiun',
-                    name: 'Stasiun Kereta',
-                    icon: '🚆',
-                    distance: '20 menit',
-                    address: 'Stasiun Bandung'
-                }, {
-                    id: 'warung',
-                    name: 'Warung Makan',
-                    icon: '🍜',
-                    distance: '2 menit',
-                    address: 'Warung Sunda'
-                }, {
-                    id: 'atm',
-                    name: 'ATM Center',
-                    icon: '🏧',
-                    distance: '3 menit',
-                    address: 'Bank BRI / BCA'
-                }, {
-                    id: 'spbu',
-                    name: 'SPBU',
-                    icon: '⛽',
-                    distance: '8 menit',
-                    address: 'SPBU Setiabudi'
-                }],
-
-                // Transportasi
-                transportation: [{
-                    id: 'gojek',
-                    name: 'Gojek',
-                    icon: '🛵',
-                    available: true,
-                    info: 'Estimasi 5 menit'
-                }, {
-                    id: 'grab',
-                    name: 'Grab',
-                    icon: '🚗',
-                    available: true,
-                    info: 'Estimasi 5 menit'
-                }, {
-                    id: 'taxi',
-                    name: 'Blue Bird Taxi',
-                    icon: '🚕',
-                    available: true,
-                    info: 'Estimasi 10 menit'
-                }, {
-                    id: 'bus',
-                    name: 'Bus Kota',
-                    icon: '🚌',
-                    available: true,
-                    info: 'Halte 5 menit'
-                }],
-
-                // Lokasi
+                propertyFacilities: [
+                    { id: 'ruang-tamu', name: 'Ruang Tamu', icon: '🛋️', description: 'Ruang tamu luas dengan sofa dan TV',
+                        available: true },
+                    { id: 'dapur', name: 'Dapur Bersama', icon: '🍽️', description: 'Dapur dengan peralatan lengkap',
+                        available: true },
+                    { id: 'laundry', name: 'Laundry Service', icon: '🧺', description: 'Mesin cuci dan pengering',
+                        available: true },
+                    { id: 'parkir', name: 'Parkir Luas', icon: '🅿️', description: 'Area parkir yang aman',
+                    available: true },
+                    { id: 'cctv', name: 'CCTV 24 Jam', icon: '🔒', description: 'Keamanan 24 jam dengan CCTV',
+                        available: true },
+                    { id: 'wifi', name: 'WiFi Cepat', icon: '📶', description: 'WiFi 100 Mbps untuk semua penghuni',
+                        available: true },
+                    { id: 'gym', name: 'Gym / Fitness', icon: '🏋️', description: 'Peralatan gym lengkap',
+                        available: false },
+                    { id: 'taman', name: 'Taman', icon: '🌳', description: 'Taman hijau untuk relaksasi',
+                    available: true }
+                ],
+                nearbyFacilities: [
+                    { id: 'rs', name: 'Rumah Sakit', icon: '🏥', distance: '5 menit', address: 'RS. Hasan Sadikin' },
+                    { id: 'supermarket', name: 'Supermarket', icon: '🛒', distance: '10 menit',
+                        address: 'Indomaret / Alfamart' },
+                    { id: 'kampus', name: 'Kampus', icon: '🎓', distance: '15 menit', address: 'UNPAD / ITB' },
+                    { id: 'halte', name: 'Halte Bus', icon: '🚌', distance: '5 menit', address: 'Halte Cisitu' },
+                    { id: 'stasiun', name: 'Stasiun Kereta', icon: '🚆', distance: '20 menit',
+                        address: 'Stasiun Bandung' },
+                    { id: 'warung', name: 'Warung Makan', icon: '🍜', distance: '2 menit', address: 'Warung Sunda' },
+                    { id: 'atm', name: 'ATM Center', icon: '🏧', distance: '3 menit', address: 'Bank BRI / BCA' },
+                    { id: 'spbu', name: 'SPBU', icon: '⛽', distance: '8 menit', address: 'SPBU Setiabudi' }
+                ],
+                transportation: [
+                    { id: 'gojek', name: 'Gojek', icon: '🛵', available: true, info: 'Estimasi 5 menit' },
+                    { id: 'grab', name: 'Grab', icon: '🚗', available: true, info: 'Estimasi 5 menit' },
+                    { id: 'taxi', name: 'Blue Bird Taxi', icon: '🚕', available: true, info: 'Estimasi 10 menit' },
+                    { id: 'bus', name: 'Bus Kota', icon: '🚌', available: true, info: 'Halte 5 menit' }
+                ],
                 location: {
                     name: 'JDI KOSKITA',
                     address: 'Jl. Merdeka No. 123, Kelurahan Sukajadi, Kecamatan Sukajadi, Kota Bandung, Jawa Barat 40162',
-                    gps: {
-                        lat: -6.9175,
-                        lng: 107.6191
-                    },
+                    gps: { lat: -6.9175, lng: 107.6191 },
                     googleMapsUrl: 'https://maps.google.com/maps?q=-6.9175,107.6191',
                     wazeUrl: 'https://waze.com/ul?ll=-6.9175,107.6191&navigate=yes'
                 },
-
-                // Testimoni
-                testimonials: [{
-                    id: 1,
-                    name: 'Budi Santoso',
-                    room: 'A1',
-                    message: 'Fasilitas lengkap, AC dingin, WiFi cepat. Dekat ke kampus dan super market. Sangat recomended!',
-                    rating: 5,
-                    date: '2026-06-01'
-                }, {
-                    id: 2,
-                    name: 'Siti Rahayu',
-                    room: 'B3',
-                    message: 'Kamar nyaman, parkir luas, dan lingkungannya bersih. Owner ramah dan responsif.',
-                    rating: 5,
-                    date: '2026-06-15'
-                }, {
-                    id: 3,
-                    name: 'Andi Wijaya',
-                    room: 'C2',
-                    message: 'Lokasi strategis, dekat ke mana-mana. Fasilitas dapur dan laundry sangat membantu.',
-                    rating: 4,
-                    date: '2026-06-20'
-                }]
+                testimonials: [
+                    { id: 1, name: 'Budi Santoso', room: 'A1',
+                        message: 'Fasilitas lengkap, AC dingin, WiFi cepat. Dekat ke kampus dan super market. Sangat recomended!',
+                        rating: 5, date: '2026-06-01' },
+                    { id: 2, name: 'Siti Rahayu', room: 'B3',
+                        message: 'Kamar nyaman, parkir luas, dan lingkungannya bersih. Owner ramah dan responsif.',
+                        rating: 5, date: '2026-06-15' },
+                    { id: 3, name: 'Andi Wijaya', room: 'C2',
+                        message: 'Lokasi strategis, dekat ke mana-mana. Fasilitas dapur dan laundry sangat membantu.',
+                        rating: 4, date: '2026-06-20' }
+                ]
             };
+
+            // ============================================================
+            // 🚀 API HELPER FUNCTIONS
+            // ============================================================
+            let CACHED_DATA = null;
+
+            async function fetchWithTimeout(url, options = {}, timeout = API_CONFIG.timeout) {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), timeout);
+                try {
+                    const response = await fetch(url, { ...options, signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    return response;
+                } catch (error) {
+                    clearTimeout(timeoutId);
+                    throw error;
+                }
+            }
+
+            async function fetchFacilitiesData() {
+                // Jika menggunakan data lokal
+                if (API_CONFIG.useLocalData) {
+                    return LOCAL_DATA;
+                }
+
+                // Jika menggunakan API
+                try {
+                    const baseUrl = API_CONFIG.baseUrl;
+                    const endpoints = API_CONFIG.endpoints;
+
+                    // Fetch semua data secara paralel
+                    const [facilitiesRes, roomTypesRes, testimonialsRes, locationRes] = await Promise.all([
+                        fetchWithTimeout(`${baseUrl}${endpoints.facilities}`),
+                        fetchWithTimeout(`${baseUrl}${endpoints.roomTypes}`),
+                        fetchWithTimeout(`${baseUrl}${endpoints.testimonials}`),
+                        fetchWithTimeout(`${baseUrl}${endpoints.location}`)
+                    ]);
+
+                    if (!facilitiesRes.ok || !roomTypesRes.ok || !testimonialsRes.ok || !locationRes.ok) {
+                        throw new Error('Gagal mengambil data dari API');
+                    }
+
+                    const facilities = await facilitiesRes.json();
+                    const roomTypes = await roomTypesRes.json();
+                    const testimonials = await testimonialsRes.json();
+                    const location = await locationRes.json();
+
+                    return {
+                        summary: facilities.summary,
+                        propertyFacilities: facilities.propertyFacilities,
+                        nearbyFacilities: facilities.nearbyFacilities,
+                        transportation: facilities.transportation,
+                        roomTypes: roomTypes,
+                        testimonials: testimonials,
+                        location: location
+                    };
+                } catch (error) {
+                    console.warn('⚠️ Gagal mengambil data dari API, menggunakan data lokal:', error.message);
+                    return LOCAL_DATA;
+                }
+            }
+
+            // ============================================================
+            // 🖼️ ICON HELPER - Support API Icon
+            // ============================================================
+            function getIconHtml(icon) {
+                if (!icon) return '📦';
+
+                // Jika icon adalah URL (dari API)
+                if (icon.startsWith('http://') || icon.startsWith('https://')) {
+                    // Icon dari Iconify API atau CDN
+                    if (icon.includes('iconify.design') || icon.includes('cdn')) {
+                        return `<img src="${icon}" alt="icon" style="width:32px;height:32px;display:inline-block;vertical-align:middle;" />`;
+                    }
+                    return `<img src="${icon}" alt="icon" style="width:32px;height:32px;display:inline-block;vertical-align:middle;" />`;
+                }
+
+                // Emoji atau karakter
+                return icon;
+            }
 
             // ============================================================
             // DOM REFS
@@ -1307,10 +1360,34 @@
             const btnWaze = document.getElementById('btnWaze');
 
             // ============================================================
-            // RENDER QUICK SUMMARY
+            // RENDER FUNCTIONS
             // ============================================================
-            function renderQuickSummary() {
-                const s = FASILITAS_DATA.summary;
+
+            // Show Loading
+            function showLoading(container) {
+                container.innerHTML = `
+                    <div class="loading-spinner">
+                        <div class="spinner"></div>
+                        <p>Memuat data...</p>
+                    </div>
+                `;
+            }
+
+            // Show Error
+            function showError(container, message) {
+                container.innerHTML = `
+                    <div class="error-state">
+                        <span class="error-icon">⚠️</span>
+                        <h4>Gagal Memuat Data</h4>
+                        <p>${message}</p>
+                        <button class="btn-retry" onclick="location.reload()">🔄 Coba Lagi</button>
+                    </div>
+                `;
+            }
+
+            // Render Quick Summary
+            function renderQuickSummary(data) {
+                const s = data.summary;
                 quickSummary.innerHTML = `
                     <div class="summary-item">
                         <span class="summary-icon">🏠</span>
@@ -1340,43 +1417,56 @@
                 `;
             }
 
-            // ============================================================
-            // RENDER ROOM TYPES
-            // ============================================================
-            function renderRoomTypes() {
-                const rooms = FASILITAS_DATA.roomTypes;
+            // Render Room Types
+            function renderRoomTypes(data) {
+                const rooms = data.roomTypes || [];
                 roomTypesGrid.innerHTML = '';
+
+                if (rooms.length === 0) {
+                    roomTypesGrid.innerHTML = `
+                        <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:40px;">
+                            <span style="font-size:48px;">🛏️</span>
+                            <h3 style="color:#0A2E6D;margin-top:8px;">Belum ada data kamar</h3>
+                            <p style="color:#888;">Tambahkan tipe kamar melalui CMS.</p>
+                        </div>
+                    `;
+                    return;
+                }
 
                 rooms.forEach(room => {
                     const card = document.createElement('div');
                     card.className = 'room-type-card';
 
                     let facilitiesHTML = '';
-                    room.facilities.forEach(f => {
-                        facilitiesHTML += `
-                            <span class="facility-tag">
-                                <span class="tag-icon">${f.icon}</span> ${f.name}
-                            </span>
-                        `;
-                    });
+                    if (room.facilities && room.facilities.length > 0) {
+                        room.facilities.forEach(f => {
+                            const iconHtml = getIconHtml(f.icon);
+                            facilitiesHTML += `
+                                <span class="facility-tag">
+                                    <span class="tag-icon">${iconHtml}</span> ${f.name}
+                                </span>
+                            `;
+                        });
+                    }
+
+                    const iconHtml = getIconHtml(room.icon);
+                    const price = room.price ? `Rp ${room.price.toLocaleString('id-ID')} / bulan` : 'Hubungi Kami';
 
                     card.innerHTML = `
                         ${room.popular ? '<span class="badge-populer">⭐ Populer</span>' : ''}
-                        <span class="room-type-icon">${room.icon}</span>
-                        <div class="room-type-name">${room.name}</div>
-                        <div class="room-type-price">
-                            Rp ${room.price.toLocaleString('id-ID')} / bulan
-                        </div>
+                        <span class="room-type-icon">${iconHtml}</span>
+                        <div class="room-type-name">${room.name || 'Tipe Kamar'}</div>
+                        <div class="room-type-price">${price}</div>
                         <div class="facility-list">${facilitiesHTML}</div>
-                        <p style="font-size:13px;color:#888;margin-top:10px;">${room.description}</p>
+                        <p style="font-size:13px;color:#888;margin-top:10px;">${room.description || ''}</p>
                     `;
 
-                    // Coba load gambar jika ada
+                    // Load gambar jika ada
                     if (room.image) {
                         const img = document.createElement('img');
                         img.src = room.image;
                         img.className = 'room-image';
-                        img.alt = room.name;
+                        img.alt = room.name || 'Kamar';
                         img.onerror = function() { this.style.display = 'none'; };
                         card.prepend(img);
                     }
@@ -1385,20 +1475,30 @@
                 });
             }
 
-            // ============================================================
-            // RENDER PROPERTY FACILITIES
-            // ============================================================
-            function renderPropertyFacilities() {
-                const facilities = FASILITAS_DATA.propertyFacilities;
+            // Render Property Facilities
+            function renderPropertyFacilities(data) {
+                const facilities = data.propertyFacilities || [];
                 propertyFacilitiesGrid.innerHTML = '';
+
+                if (facilities.length === 0) {
+                    propertyFacilitiesGrid.innerHTML = `
+                        <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:30px;">
+                            <span style="font-size:36px;">🏢</span>
+                            <h4 style="color:#0A2E6D;margin-top:6px;">Belum ada fasilitas properti</h4>
+                            <p style="color:#888;font-size:13px;">Tambahkan melalui CMS.</p>
+                        </div>
+                    `;
+                    return;
+                }
 
                 facilities.forEach(f => {
                     const item = document.createElement('div');
                     item.className = 'property-facility-item';
+                    const iconHtml = getIconHtml(f.icon);
                     item.innerHTML = `
-                        <span class="pf-icon">${f.icon}</span>
-                        <div class="pf-name">${f.name}</div>
-                        <div class="pf-desc">${f.description}</div>
+                        <span class="pf-icon">${iconHtml}</span>
+                        <div class="pf-name">${f.name || 'Fasilitas'}</div>
+                        <div class="pf-desc">${f.description || ''}</div>
                         <span class="pf-status ${f.available ? 'available' : 'coming'}">
                             ${f.available ? '✅ Tersedia' : '⏳ Coming Soon'}
                         </span>
@@ -1407,41 +1507,61 @@
                 });
             }
 
-            // ============================================================
-            // RENDER NEARBY FACILITIES
-            // ============================================================
-            function renderNearby() {
-                const nearby = FASILITAS_DATA.nearbyFacilities;
+            // Render Nearby Facilities
+            function renderNearby(data) {
+                const nearby = data.nearbyFacilities || [];
                 nearbyGrid.innerHTML = '';
+
+                if (nearby.length === 0) {
+                    nearbyGrid.innerHTML = `
+                        <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:30px;">
+                            <span style="font-size:36px;">📍</span>
+                            <h4 style="color:#0A2E6D;margin-top:6px;">Belum ada data fasilitas umum</h4>
+                            <p style="color:#888;font-size:13px;">Tambahkan melalui CMS.</p>
+                        </div>
+                    `;
+                    return;
+                }
 
                 nearby.forEach(n => {
                     const item = document.createElement('div');
                     item.className = 'nearby-item';
+                    const iconHtml = getIconHtml(n.icon);
                     item.innerHTML = `
-                        <span class="nearby-icon">${n.icon}</span>
+                        <span class="nearby-icon">${iconHtml}</span>
                         <div class="nearby-info">
-                            <div class="nearby-name">${n.name}</div>
-                            <div class="nearby-distance">⏱️ ${n.distance}</div>
-                            <div class="nearby-address">📍 ${n.address}</div>
+                            <div class="nearby-name">${n.name || 'Fasilitas'}</div>
+                            <div class="nearby-distance">⏱️ ${n.distance || '-'}</div>
+                            <div class="nearby-address">📍 ${n.address || ''}</div>
                         </div>
                     `;
                     nearbyGrid.appendChild(item);
                 });
             }
 
-            // ============================================================
-            // RENDER TRANSPORTATION
-            // ============================================================
-            function renderTransportation() {
-                const transports = FASILITAS_DATA.transportation;
+            // Render Transportation
+            function renderTransportation(data) {
+                const transports = data.transportation || [];
                 transportGrid.innerHTML = '';
+
+                if (transports.length === 0) {
+                    transportGrid.innerHTML = `
+                        <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:30px;">
+                            <span style="font-size:36px;">🚗</span>
+                            <h4 style="color:#0A2E6D;margin-top:6px;">Belum ada data transportasi</h4>
+                            <p style="color:#888;font-size:13px;">Tambahkan melalui CMS.</p>
+                        </div>
+                    `;
+                    return;
+                }
 
                 transports.forEach(t => {
                     const item = document.createElement('div');
                     item.className = 'transport-item';
+                    const iconHtml = getIconHtml(t.icon);
                     item.innerHTML = `
-                        <span class="transport-icon">${t.icon}</span>
-                        <div class="transport-name">${t.name}</div>
+                        <span class="transport-icon">${iconHtml}</span>
+                        <div class="transport-name">${t.name || 'Transportasi'}</div>
                         <div class="transport-info">
                             <span class="${t.available ? 'available' : 'unavailable'}">
                                 ${t.available ? '✅ Tersedia' : '❌ Tidak Tersedia'}
@@ -1453,11 +1573,9 @@
                 });
             }
 
-            // ============================================================
-            // RENDER MAP
-            // ============================================================
-            function renderMap() {
-                const loc = FASILITAS_DATA.location;
+            // Render Map
+            function renderMap(data) {
+                const loc = data.location || LOCAL_DATA.location;
                 const mapsEmbedUrl =
                     `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${loc.gps.lat},${loc.gps.lng}&zoom=15`;
 
@@ -1472,38 +1590,90 @@
                 `;
 
                 // Update tombol navigasi
-                btnGoogleMaps.href = loc.googleMapsUrl;
-                btnWaze.href = loc.wazeUrl;
+                btnGoogleMaps.href = loc.googleMapsUrl || `https://maps.google.com/maps?q=${loc.gps.lat},${loc.gps.lng}`;
+                btnWaze.href = loc.wazeUrl || `https://waze.com/ul?ll=${loc.gps.lat},${loc.gps.lng}&navigate=yes`;
             }
 
-            // ============================================================
-            // RENDER TESTIMONIALS
-            // ============================================================
-            function renderTestimonials() {
-                const testimonials = FASILITAS_DATA.testimonials;
+            // Render Testimonials
+            function renderTestimonials(data) {
+                const testimonials = data.testimonials || [];
                 testimonialsGrid.innerHTML = '';
+
+                if (testimonials.length === 0) {
+                    testimonialsGrid.innerHTML = `
+                        <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:30px;">
+                            <span style="font-size:36px;">💬</span>
+                            <h4 style="color:#0A2E6D;margin-top:6px;">Belum ada testimoni</h4>
+                            <p style="color:#888;font-size:13px;">Testimoni akan muncul setelah penghuni memberi ulasan.</p>
+                        </div>
+                    `;
+                    return;
+                }
 
                 testimonials.forEach(t => {
                     const card = document.createElement('div');
                     card.className = 'testimonial-card';
 
-                    // Render stars
                     let stars = '';
                     for (let i = 0; i < 5; i++) {
-                        stars += i < t.rating ? '⭐' : '☆';
+                        stars += i < (t.rating || 0) ? '⭐' : '☆';
                     }
+
+                    const dateStr = t.date ? new Date(t.date).toLocaleDateString('id-ID', { day: 'numeric',
+                        month: 'long', year: 'numeric' }) : '';
 
                     card.innerHTML = `
                         <div class="testimonial-header">
-                            <span class="testi-name">${t.name}</span>
-                            <span class="testi-room">Kamar ${t.room}</span>
+                            <span class="testi-name">${t.name || 'Penghuni'}</span>
+                            <span class="testi-room">${t.room ? 'Kamar ' + t.room : ''}</span>
                         </div>
                         <div class="testimonial-stars">${stars}</div>
-                        <p class="testimonial-message">"${t.message}"</p>
-                        <span class="testimonial-date">📅 ${new Date(t.date).toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'})}</span>
+                        <p class="testimonial-message">"${t.message || ''}"</p>
+                        ${dateStr ? `<span class="testimonial-date">📅 ${dateStr}</span>` : ''}
                     `;
                     testimonialsGrid.appendChild(card);
                 });
+            }
+
+            // ============================================================
+            // 🚀 MAIN LOAD FUNCTION
+            // ============================================================
+            async function loadFacilitiesData() {
+                // Tampilkan loading state di semua container
+                const containers = [
+                    quickSummary, roomTypesGrid, propertyFacilitiesGrid,
+                    nearbyGrid, transportGrid, testimonialsGrid
+                ];
+                containers.forEach(c => showLoading(c));
+
+                try {
+                    const data = await fetchFacilitiesData();
+
+                    // Simpan ke cache
+                    CACHED_DATA = data;
+
+                    // Render semua data
+                    renderQuickSummary(data);
+                    renderRoomTypes(data);
+                    renderPropertyFacilities(data);
+                    renderNearby(data);
+                    renderTransportation(data);
+                    renderMap(data);
+                    renderTestimonials(data);
+
+                    console.log('✅ JDI KOSKITA - Fasilitas berhasil dimuat!');
+                    console.log('📊 Data:', data);
+
+                } catch (error) {
+                    console.error('❌ Gagal memuat data fasilitas:', error);
+                    const errorMsg = 'Gagal memuat data. ' + (error.message || '');
+                    showError(quickSummary, errorMsg);
+                    showError(roomTypesGrid, errorMsg);
+                    showError(propertyFacilitiesGrid, errorMsg);
+                    showError(nearbyGrid, errorMsg);
+                    showError(transportGrid, errorMsg);
+                    showError(testimonialsGrid, errorMsg);
+                }
             }
 
             // ============================================================
@@ -1530,61 +1700,29 @@
             // EXPOSE FOR CMS
             // ============================================================
             window.FasilitasCMS = {
-                data: FASILITAS_DATA,
-                renderAll: function() {
-                    renderQuickSummary();
-                    renderRoomTypes();
-                    renderPropertyFacilities();
-                    renderNearby();
-                    renderTransportation();
-                    renderMap();
-                    renderTestimonials();
+                data: LOCAL_DATA,
+                reload: loadFacilitiesData,
+                updateConfig: function(newConfig) {
+                    Object.assign(API_CONFIG, newConfig);
+                    console.log('✅ Konfigurasi API diperbarui:', API_CONFIG);
                 },
-                updateSummary: function(newSummary) {
-                    Object.assign(FASILITAS_DATA.summary, newSummary);
-                    renderQuickSummary();
+                useLocalData: function(useLocal) {
+                    API_CONFIG.useLocalData = useLocal;
+                    loadFacilitiesData();
                 },
-                updateRoomTypes: function(newRooms) {
-                    FASILITAS_DATA.roomTypes = newRooms;
-                    renderRoomTypes();
-                },
-                updatePropertyFacilities: function(newFacilities) {
-                    FASILITAS_DATA.propertyFacilities = newFacilities;
-                    renderPropertyFacilities();
-                },
-                updateNearby: function(newNearby) {
-                    FASILITAS_DATA.nearbyFacilities = newNearby;
-                    renderNearby();
-                },
-                updateTransportation: function(newTransport) {
-                    FASILITAS_DATA.transportation = newTransport;
-                    renderTransportation();
-                },
-                updateTestimonials: function(newTestimonials) {
-                    FASILITAS_DATA.testimonials = newTestimonials;
-                    renderTestimonials();
-                },
-                updateLocation: function(newLocation) {
-                    Object.assign(FASILITAS_DATA.location, newLocation);
-                    renderMap();
-                }
+                refresh: loadFacilitiesData
             };
 
             // ============================================================
-            // INIT
+            // INIT - LOAD DATA
             // ============================================================
-            renderQuickSummary();
-            renderRoomTypes();
-            renderPropertyFacilities();
-            renderNearby();
-            renderTransportation();
-            renderMap();
-            renderTestimonials();
+            loadFacilitiesData();
 
-            console.log('✅ JDI KOSKITA - Fasilitas CMS Ready');
-            console.log('📊 Data fasilitas dapat diedit melalui window.FasilitasCMS');
-            console.log('   Contoh: window.FasilitasCMS.updateSummary({ totalRooms: 25 })');
-            console.log('   Contoh: window.FasilitasCMS.updateTestimonials([...])');
+            console.log('✅ JDI KOSKITA - Fasilitas CMS Ready with API Support');
+            console.log('📊 Data dapat diambil dari API atau lokal');
+            console.log('🔧 API Config:', API_CONFIG);
+            console.log('   📌 Untuk menggunakan API, set API_CONFIG.useLocalData = false');
+            console.log('   📌 Dan atur API_CONFIG.baseUrl dengan URL API Anda');
 
         })();
     </script>

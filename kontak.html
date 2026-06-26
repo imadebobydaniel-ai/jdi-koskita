@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JDI KOSKITA - Kontak</title>
+    <style>
+        /* ============================================================
+           RESET & BASE
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f0f4f9;
+            color: #333;
+        }
+
+        /* ============================================================
+           HEADER & NAVIGATION
+           ============================================================ */
+        header {
+            background: #0A2E6D;
+            color: #fff;
+            padding: 12px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-container {
+            max-width: 1300px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            border-radius: 50%;
+            object-fit: contain;
+            padding: 4px;
+        }
+
+        .logo h2 {
+            font-size: 26px;
+            margin-bottom: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo h2 span {
+            color: #FF7A00;
+        }
+
+        .logo p {
+            font-size: 12px;
+            opacity: 0.8;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: 0.3s;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .nav-menu a:hover {
+            background: #FF7A00;
+            color: #fff;
+        }
+
+        .nav-menu .btn-login {
+            background: #FF7A00;
+            color: #fff;
+            border-radius: 6px;
+            padding: 8px 18px;
+            font-weight: 600;
+        }
+
+        .nav-menu .btn-login:hover {
+            background: #fff;
+            color: #0A2E6D;
+        }
+
+        .nav-menu .active {
+            background: #FF7A00;
+            color: #fff;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: #fff;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        /* ============================================================
+           BREADCRUMB
+           ============================================================ */
+        .breadcrumb {
+            background: #fff;
+            padding: 14px 40px;
+            border-bottom: 1px solid #e9edf2;
+        }
+
+        .breadcrumb-container {
+            max-width: 1300px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .breadcrumb-container h1 {
+            font-size: 24px;
+            color: #0A2E6D;
+        }
+
+        .breadcrumb-container h1 span {
+            color: #FF7A00;
+        }
+
+        .breadcrumb-container .breadcrumb-links {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .breadcrumb-container .breadcrumb-links a {
+            color: #0A2E6D;
+            text-decoration: none;
+        }
+
+        .breadcrumb-container .breadcrumb-links a:hover {
+            color: #FF7A00;
+        }
+
+        /* ============================================================
+           MAIN CONTENT
+           ============================================================ */
+        .kontak-section {
+            max-width: 1300px;
+            margin: 30px auto;
+            padding: 0 40px;
+        }
+
+        /* ---- Header ---- */
+        .kontak-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .kontak-header h2 {
+            font-size: 32px;
+            color: #0A2E6D;
+            margin-bottom: 8px;
+        }
+
+        .kontak-header h2 span {
+            color: #FF7A00;
+        }
+
+        .kontak-header p {
+            color: #888;
+            font-size: 16px;
+        }
+
+        /* ---- Admin Status ---- */
+        .admin-status {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            border-left: 5px solid #28a745;
+        }
+
+        .admin-status .status-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .admin-status .status-indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        .admin-status .status-indicator.online {
+            background: #28a745;
+            box-shadow: 0 0 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .admin-status .status-indicator.offline {
+            background: #dc3545;
+            box-shadow: 0 0 20px rgba(220, 53, 69, 0.4);
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+            }
+        }
+
+        .admin-status .status-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0A2E6D;
+        }
+
+        .admin-status .status-text .online-text {
+            color: #28a745;
+        }
+
+        .admin-status .status-text .offline-text {
+            color: #dc3545;
+        }
+
+        .admin-status .status-message {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .admin-status .status-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+            color: #888;
+        }
+
+        .admin-status .status-right .time-icon {
+            font-size: 18px;
+        }
+
+        /* ---- Contact Cards ---- */
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .contact-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e9edf2;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            border-color: #FF7A00;
+        }
+
+        .contact-card .card-icon {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .contact-card h4 {
+            font-size: 18px;
+            color: #0A2E6D;
+            margin-bottom: 6px;
+        }
+
+        .contact-card p {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .contact-card .btn-contact {
+            display: inline-block;
+            padding: 10px 28px;
+            border-radius: 10px;
+            background: #FF7A00;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .contact-card .btn-contact:hover {
+            background: #e06a00;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 122, 0, 0.3);
+        }
+
+        .contact-card .btn-contact.whatsapp {
+            background: #25D366;
+        }
+
+        .contact-card .btn-contact.whatsapp:hover {
+            background: #1da851;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+        }
+
+        .contact-card .btn-contact.email {
+            background: #0A2E6D;
+        }
+
+        .contact-card .btn-contact.email:hover {
+            background: #1a4a8a;
+            box-shadow: 0 8px 25px rgba(10, 46, 109, 0.3);
+        }
+
+        .contact-card .btn-contact.livechat {
+            background: #6f42c1;
+        }
+
+        .contact-card .btn-contact.livechat:hover {
+            background: #5a32a3;
+            box-shadow: 0 8px 25px rgba(111, 66, 193, 0.3);
+        }
+
+        /* ---- Email Form ---- */
+        .email-form-container {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e9edf2;
+            display: none;
+        }
+
+        .email-form-container.show {
+            display: block;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .email-form-container .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .email-form-container .form-header h4 {
+            font-size: 18px;
+            color: #0A2E6D;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .email-form-container .form-header .btn-close-form {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            transition: 0.3s;
+        }
+
+        .email-form-container .form-header .btn-close-form:hover {
+            color: #dc3545;
+        }
+
+        .email-form .form-group {
+            margin-bottom: 16px;
+        }
+
+        .email-form .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #0A2E6D;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .email-form .form-group label .required {
+            color: #dc3545;
+        }
+
+        .email-form .form-group input,
+        .email-form .form-group select,
+        .email-form .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+            background: #fafcff;
+        }
+
+        .email-form .form-group input:focus,
+        .email-form .form-group select:focus,
+        .email-form .form-group textarea:focus {
+            outline: none;
+            border-color: #FF7A00;
+            box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.1);
+            background: #fff;
+        }
+
+        .email-form .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .email-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .email-form .btn-submit {
+            padding: 12px 36px;
+            background: #FF7A00;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .email-form .btn-submit:hover {
+            background: #e06a00;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 122, 0, 0.3);
+        }
+
+        .email-form .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ---- Success Message ---- */
+        .success-message {
+            display: none;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-top: 16px;
+            font-weight: 500;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        /* ---- Live Chat Modal ---- */
+        .chat-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+            padding: 20px;
+        }
+
+        .chat-modal-overlay.show {
+            display: flex;
+        }
+
+        .chat-modal {
+            background: #fff;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 420px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .chat-modal .chat-header {
+            padding: 16px 20px;
+            background: #0A2E6D;
+            color: #fff;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-modal .chat-header .chat-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .chat-modal .chat-header .chat-title .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .chat-modal .chat-header .chat-title .status-dot.online {
+            background: #28a745;
+        }
+
+        .chat-modal .chat-header .btn-close-chat {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+
+        .chat-modal .chat-header .btn-close-chat:hover {
+            opacity: 1;
+        }
+
+        .chat-modal .chat-body {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+            max-height: 400px;
+            background: #f8faff;
+        }
+
+        .chat-modal .chat-body .chat-message {
+            margin-bottom: 12px;
+            padding: 10px 16px;
+            border-radius: 12px;
+            max-width: 85%;
+            animation: messageIn 0.3s ease;
+        }
+
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-modal .chat-body .chat-message.bot {
+            background: #e9edf2;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-modal .chat-body .chat-message.user {
+            background: #FF7A00;
+            color: #fff;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-modal .chat-body .chat-message .msg-time {
+            font-size: 10px;
+            opacity: 0.6;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .chat-modal .chat-body .chat-message.user .msg-time {
+            text-align: right;
+        }
+
+        .chat-modal .chat-footer {
+            padding: 12px 16px;
+            border-top: 1px solid #e9edf2;
+            display: flex;
+            gap: 10px;
+            background: #fff;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .chat-modal .chat-footer input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .chat-modal .chat-footer input:focus {
+            outline: none;
+            border-color: #FF7A00;
+            box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.1);
+        }
+
+        .chat-modal .chat-footer .btn-send {
+            padding: 10px 20px;
+            background: #FF7A00;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .chat-modal .chat-footer .btn-send:hover {
+            background: #e06a00;
+        }
+
+        .chat-modal .chat-footer .btn-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ---- Location & Info ---- */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e9edf2;
+        }
+
+        .info-card .info-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0A2E6D;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-card .info-title span {
+            color: #FF7A00;
+        }
+
+        .info-card .info-address {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .info-card .map-wrapper {
+            border-radius: 10px;
+            overflow: hidden;
+            min-height: 200px;
+            background: #e9edf2;
+        }
+
+        .info-card .map-wrapper iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+
+        .info-card .map-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .info-card .map-actions .btn-map {
+            padding: 6px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.3s;
+        }
+
+        .info-card .map-actions .btn-map.google {
+            background: #0A2E6D;
+            color: #fff;
+        }
+
+        .info-card .map-actions .btn-map.google:hover {
+            background: #1a4a8a;
+        }
+
+        .info-card .map-actions .btn-map.waze {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        .info-card .map-actions .btn-map.waze:hover {
+            background: #2a2a4e;
+        }
+
+        /* ---- Contact Details ---- */
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .contact-details .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: #f8faff;
+            border-radius: 10px;
+            border: 1px solid #e9edf2;
+            transition: 0.3s;
+        }
+
+        .contact-details .detail-item:hover {
+            border-color: #FF7A00;
+            background: #fff8f0;
+        }
+
+        .contact-details .detail-item .detail-icon {
+            font-size: 22px;
+            min-width: 36px;
+            text-align: center;
+        }
+
+        .contact-details .detail-item .detail-info {
+            flex: 1;
+        }
+
+        .contact-details .detail-item .detail-info .detail-label {
+            font-size: 11px;
+            color: #888;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .contact-details .detail-item .detail-info .detail-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0A2E6D;
+        }
+
+        .contact-details .detail-item .detail-info .detail-value a {
+            color: #0A2E6D;
+            text-decoration: none;
+        }
+
+        .contact-details .detail-item .detail-info .detail-value a:hover {
+            color: #FF7A00;
+        }
+
+        /* ---- Social Media ---- */
+        .social-section {
+            margin-top: 10px;
+        }
+
+        .social-section .social-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0A2E6D;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-section .social-icons {
+            display: flex;
+            gap: 14px;
+        }
+
+        .social-section .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #f0f4f9;
+            color: #0A2E6D;
+            font-size: 22px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-section .social-icons a:hover {
+            background: #FF7A00;
+            color: #fff;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(255, 122, 0, 0.3);
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            background: #1a1a2e;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 40px 30px 35px;
+            border-top: 4px solid #FF7A00;
+            margin-top: 40px;
+        }
+
+        footer .footer-brand {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        footer .footer-brand span {
+            color: #FF7A00;
+        }
+
+        footer p {
+            margin: 6px 0;
+            font-size: 14px;
+        }
+
+        footer .footer-divider {
+            width: 60px;
+            height: 3px;
+            background: #FF7A00;
+            margin: 14px auto;
+            border-radius: 2px;
+        }
+
+        .footer-links {
+            margin-top: 16px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            margin: 0 14px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #FF7A00;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 991px) {
+            .header-container {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .nav-menu {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                padding-top: 8px;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+            }
+            .nav-menu a {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            .breadcrumb {
+                padding: 12px 20px;
+            }
+            .kontak-section {
+                padding: 0 20px;
+            }
+            .kontak-header h2 {
+                font-size: 28px;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .email-form .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .contact-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+            .admin-status {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 16px 20px;
+            }
+            .admin-status .status-right {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .info-card .map-wrapper {
+                min-height: 180px;
+            }
+            .info-card .map-wrapper iframe {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            header {
+                padding: 10px 16px;
+            }
+            .logo img {
+                width: 48px;
+                height: 48px;
+            }
+            .logo h2 {
+                font-size: 20px;
+            }
+            .logo p {
+                font-size: 10px;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                padding-top: 12px;
+                gap: 4px;
+            }
+            .nav-menu.open {
+                display: flex;
+            }
+            .nav-menu a {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+                font-size: 14px;
+            }
+            .breadcrumb-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .breadcrumb-container h1 {
+                font-size: 20px;
+            }
+            .kontak-section {
+                padding: 0 12px;
+                margin-top: 16px;
+            }
+            .kontak-header h2 {
+                font-size: 24px;
+            }
+            .contact-cards {
+                grid-template-columns: 1fr;
+            }
+            .contact-card {
+                padding: 20px 16px;
+            }
+            .chat-modal {
+                max-width: 100%;
+                max-height: 90vh;
+            }
+            .chat-modal .chat-body {
+                max-height: 300px;
+            }
+            .footer-links a {
+                display: inline-block;
+                margin: 4px 10px;
+                font-size: 13px;
+            }
+        }
+
+        @media (min-width: 577px) {
+            .nav-menu {
+                display: flex !important;
+            }
+            .hamburger {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    HEADER
+    ============================================================ -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="assets/logo-jdi.png" alt="Logo JDI KOSKITA" />
+                <div>
+                    <h2>JDI <span>KOSKITA</span></h2>
+                    <p>Smart Boarding House Management System</p>
+                </div>
+            </div>
+
+            <div class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html">Beranda</a>
+                <a href="cek-in.html">Cek-in</a>
+                <a href="galeri.html">Galeri</a>
+                <a href="fasilitas.html">Fasilitas</a>
+                <a href="daftar-harga.html">Daftar Harga</a>
+                <a href="kontak.html" class="active">Kontak</a>
+                <a href="#" class="btn-login">Login Tamu</a>
+                <a href="#" class="btn-login">Login Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    BREADCRUMB
+    ============================================================ -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <h1>📞 <span>Kontak</span> JDI KOSKITA</h1>
+            <div class="breadcrumb-links">
+                <a href="index.html">Beranda</a> &gt; <span>Kontak</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    MAIN CONTENT
+    ============================================================ -->
+    <section class="kontak-section">
+
+        <!-- Header -->
+        <div class="kontak-header">
+            <h2>Hubungi <span>Kami</span></h2>
+            <p>Kami siap membantu Anda 24/7 untuk informasi dan pendaftaran</p>
+        </div>
+
+        <!-- ============================================================
+        ADMIN STATUS
+        ============================================================ -->
+        <div class="admin-status" id="adminStatus">
+            <div class="status-left">
+                <span class="status-indicator" id="statusIndicator"></span>
+                <div>
+                    <div class="status-text" id="statusText">
+                        <span class="online-text">● Admin Online</span>
+                    </div>
+                    <div class="status-message" id="statusMessage">Kami siap merespon pertanyaan Anda</div>
+                </div>
+            </div>
+            <div class="status-right">
+                <span class="time-icon">🕐</span>
+                <span id="operationalHours">Senin - Minggu: 24 Jam</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        CONTACT CARDS
+        ============================================================ -->
+        <div class="contact-cards" id="contactCards">
+            <!-- Akan di-generate oleh JavaScript -->
+        </div>
+
+        <!-- ============================================================
+        EMAIL FORM
+        ============================================================ -->
+        <div class="email-form-container" id="emailFormContainer">
+            <div class="form-header">
+                <h4>✉️ Kirim Email</h4>
+                <button class="btn-close-form" id="closeEmailForm">✕</button>
+            </div>
+            <form class="email-form" id="emailForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nama Lengkap <span class="required">*</span></label>
+                        <input type="text" id="emailName" placeholder="Nama Anda" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Email <span class="required">*</span></label>
+                        <input type="email" id="emailAddress" placeholder="email@example.com" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Subjek <span class="required">*</span></label>
+                    <select id="emailSubject" required>
+                        <option value="">Pilih Subjek...</option>
+                        <option value="Informasi Sewa">Informasi Sewa</option>
+                        <option value="Pendaftaran">Pendaftaran</option>
+                        <option value="Fasilitas">Fasilitas</option>
+                        <option value="Keluhan">Keluhan</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Pesan <span class="required">*</span></label>
+                    <textarea id="emailMessage" placeholder="Tulis pesan Anda di sini..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit" id="submitEmail">📨 Kirim Email</button>
+                <div class="success-message" id="emailSuccess">
+                    ✅ Email berhasil terkirim! Kami akan merespon dalam 1x24 jam.
+                </div>
+            </form>
+        </div>
+
+        <!-- ============================================================
+        LOCATION & INFO
+        ============================================================ -->
+        <div class="info-grid" id="infoGrid">
+            <!-- Akan di-generate oleh JavaScript -->
+        </div>
+
+        <!-- ============================================================
+        SOCIAL MEDIA
+        ============================================================ -->
+        <div class="social-section" id="socialSection">
+            <!-- Akan di-generate oleh JavaScript -->
+        </div>
+
+    </section>
+
+    <!-- ============================================================
+    LIVE CHAT MODAL
+    ============================================================ -->
+    <div class="chat-modal-overlay" id="chatModal">
+        <div class="chat-modal">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <span class="status-dot online"></span>
+                    💬 Live Chat
+                </div>
+                <button class="btn-close-chat" id="closeChat">✕</button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="chat-message bot">
+                    👋 Halo! Selamat datang di Live Chat JDI KOSKITA.<br />
+                    Ada yang bisa kami bantu?
+                    <span class="msg-time">Online</span>
+                </div>
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="chatInput" placeholder="Ketik pesan..." />
+                <button class="btn-send" id="sendChat">Kirim</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer>
+        <div class="footer-brand">JDI <span>KOSKITA</span></div>
+        <p>Smart Boarding House Management System</p>
+        <div class="footer-divider"></div>
+        <p>&copy; 2026 JDI KOSKITA. All Rights Reserved.</p>
+        <div class="footer-links">
+            <a href="index.html">Beranda</a>
+            <a href="cek-in.html">Cek-in</a>
+            <a href="galeri.html">Galeri</a>
+            <a href="fasilitas.html">Fasilitas</a>
+            <a href="daftar-harga.html">Daftar Harga</a>
+            <a href="kontak.html">Kontak</a>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+    JAVASCRIPT - CMS READY
+    ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            // 📊 KONTAK DATA (CMS Ready)
+            // ============================================================
+            const KONTAK_DATA = {
+                adminStatus: {
+                    online: true,
+                    message: 'Kami siap merespon pertanyaan Anda',
+                    lastActive: 'Online sekarang'
+                },
+                operationalHours: {
+                    monday_friday: '08:00 - 22:00',
+                    saturday: '09:00 - 21:00',
+                    sunday: '09:00 - 21:00',
+                    display: 'Senin - Minggu: 24 Jam'
+                },
+                contactCards: [{
+                    id: 'livechat',
+                    icon: '💬',
+                    title: 'Live Chat',
+                    description: 'Chat langsung dengan admin kami secara real-time.',
+                    buttonText: 'Mulai Chat',
+                    buttonClass: 'livechat',
+                    action: 'chat'
+                }, {
+                    id: 'whatsapp',
+                    icon: '📱',
+                    title: 'WhatsApp',
+                    description: 'Chat cepat melalui WhatsApp dengan admin.',
+                    buttonText: 'Chat via WA',
+                    buttonClass: 'whatsapp',
+                    action: 'whatsapp'
+                }, {
+                    id: 'email',
+                    icon: '✉️',
+                    title: 'Email',
+                    description: 'Kirim pesan langsung melalui form email di website.',
+                    buttonText: 'Kirim Email',
+                    buttonClass: 'email',
+                    action: 'email'
+                }],
+                whatsapp: {
+                    number: '+6281234567890',
+                    message: 'Halo JDI KOSKITA, saya ingin bertanya tentang...',
+                    isActive: true
+                },
+                address: {
+                    full: 'Jl. Merdeka No. 123, Kelurahan Sukajadi, Kecamatan Sukajadi, Kota Bandung, Jawa Barat 40162',
+                    short: 'Jl. Merdeka No. 123, Bandung',
+                    gps: { lat: -6.9175, lng: 107.6191 },
+                    googleMapsUrl: 'https://maps.google.com/maps?q=-6.9175,107.6191',
+                    wazeUrl: 'https://waze.com/ul?ll=-6.9175,107.6191&navigate=yes'
+                },
+                phone: {
+                    primary: '+62 812-3456-7890',
+                    secondary: '+62 812-3456-7891'
+                },
+                email: {
+                    address: 'info@jdikoskita.com',
+                    subject: 'Pertanyaan dari Website'
+                },
+                social: {
+                    instagram: 'https://instagram.com/jdikoskita',
+                    facebook: 'https://facebook.com/jdikoskita',
+                    youtube: 'https://youtube.com/jdikoskita',
+                    tiktok: 'https://tiktok.com/@jdikoskita'
+                },
+                emailAutoReply: 'Terima kasih atas pesan Anda. Kami akan merespon dalam 1x24 jam.'
+            };
+
+            // ============================================================
+            // DOM REFS
+            // ============================================================
+            const adminStatus = document.getElementById('adminStatus');
+            const statusIndicator = document.getElementById('statusIndicator');
+            const statusText = document.getElementById('statusText');
+            const statusMessage = document.getElementById('statusMessage');
+            const operationalHours = document.getElementById('operationalHours');
+            const contactCards = document.getElementById('contactCards');
+            const infoGrid = document.getElementById('infoGrid');
+            const socialSection = document.getElementById('socialSection');
+
+            const emailFormContainer = document.getElementById('emailFormContainer');
+            const closeEmailForm = document.getElementById('closeEmailForm');
+            const emailForm = document.getElementById('emailForm');
+            const emailName = document.getElementById('emailName');
+            const emailAddress = document.getElementById('emailAddress');
+            const emailSubject = document.getElementById('emailSubject');
+            const emailMessage = document.getElementById('emailMessage');
+            const submitEmail = document.getElementById('submitEmail');
+            const emailSuccess = document.getElementById('emailSuccess');
+
+            const chatModal = document.getElementById('chatModal');
+            const closeChat = document.getElementById('closeChat');
+            const chatBody = document.getElementById('chatBody');
+            const chatInput = document.getElementById('chatInput');
+            const sendChat = document.getElementById('sendChat');
+
+            // ============================================================
+            // RENDER FUNCTIONS
+            // ============================================================
+
+            // Render Admin Status
+            function renderAdminStatus() {
+                const status = KONTAK_DATA.adminStatus;
+                const isOnline = status.online;
+
+                statusIndicator.className = 'status-indicator ' + (isOnline ? 'online' : 'offline');
+                statusText.innerHTML = isOnline ?
+                    '<span class="online-text">● Admin Online</span>' :
+                    '<span class="offline-text">● Admin Offline</span>';
+                statusMessage.textContent = status.message || (isOnline ? 'Kami siap merespon pertanyaan Anda' :
+                    'Kami akan merespon segera setelah online');
+                operationalHours.textContent = KONTAK_DATA.operationalHours.display || 'Senin - Minggu: 24 Jam';
+            }
+
+            // Render Contact Cards
+            function renderContactCards() {
+                const cards = KONTAK_DATA.contactCards;
+                contactCards.innerHTML = '';
+
+                cards.forEach(card => {
+                    const div = document.createElement('div');
+                    div.className = 'contact-card';
+                    div.innerHTML = `
+                        <span class="card-icon">${card.icon}</span>
+                        <h4>${card.title}</h4>
+                        <p>${card.description}</p>
+                        <button class="btn-contact ${card.buttonClass}" data-action="${card.action}">
+                            ${card.buttonText}
+                        </button>
+                    `;
+                    contactCards.appendChild(div);
+
+                    // Event listener untuk tombol
+                    const btn = div.querySelector('.btn-contact');
+                    btn.addEventListener('click', function() {
+                        const action = this.dataset.action;
+                        handleContactAction(action);
+                    });
+                });
+            }
+
+            // Handle Contact Actions
+            function handleContactAction(action) {
+                switch (action) {
+                    case 'chat':
+                        openChat();
+                        break;
+                    case 'whatsapp':
+                        openWhatsApp();
+                        break;
+                    case 'email':
+                        toggleEmailForm();
+                        break;
+                }
+            }
+
+            // Open WhatsApp
+            function openWhatsApp() {
+                const wa = KONTAK_DATA.whatsapp;
+                const number = wa.number.replace(/[^0-9]/g, '');
+                const message = encodeURIComponent(wa.message);
+                window.open(`https://wa.me/${number}?text=${message}`, '_blank');
+            }
+
+            // Toggle Email Form
+            function toggleEmailForm() {
+                const isVisible = emailFormContainer.classList.contains('show');
+                if (isVisible) {
+                    emailFormContainer.classList.remove('show');
+                    resetEmailForm();
+                } else {
+                    emailFormContainer.classList.add('show');
+                    emailFormContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+
+            // Reset Email Form
+            function resetEmailForm() {
+                emailName.value = '';
+                emailAddress.value = '';
+                emailSubject.value = '';
+                emailMessage.value = '';
+                emailSuccess.classList.remove('show');
+                submitEmail.disabled = false;
+                submitEmail.textContent = '📨 Kirim Email';
+            }
+
+            // Render Info Grid (Location & Contact Details)
+            function renderInfoGrid() {
+                const addr = KONTAK_DATA.address;
+                const phone = KONTAK_DATA.phone;
+                const email = KONTAK_DATA.email;
+
+                const mapsEmbedUrl =
+                    `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${addr.gps.lat},${addr.gps.lng}&zoom=15`;
+
+                infoGrid.innerHTML = `
+                    <div class="info-card">
+                        <div class="info-title">📍 <span>Lokasi</span> Kami</div>
+                        <div class="info-address">${addr.full}</div>
+                        <div class="map-wrapper">
+                            <iframe 
+                                src="${mapsEmbedUrl}" 
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="Peta Lokasi JDI KOSKITA"
+                            ></iframe>
+                        </div>
+                        <div class="map-actions">
+                            <a href="${addr.googleMapsUrl}" target="_blank" class="btn-map google">🗺️ Google Maps</a>
+                            <a href="${addr.wazeUrl}" target="_blank" class="btn-map waze">🧭 Waze</a>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-title">📋 <span>Informasi</span> Kontak</div>
+                        <div class="contact-details">
+                            <div class="detail-item">
+                                <span class="detail-icon">📞</span>
+                                <div class="detail-info">
+                                    <div class="detail-label">Telepon</div>
+                                    <div class="detail-value"><a href="tel:${phone.primary}">${phone.primary}</a></div>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">✉️</span>
+                                <div class="detail-info">
+                                    <div class="detail-label">Email</div>
+                                    <div class="detail-value"><a href="mailto:${email.address}">${email.address}</a></div>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">🕐</span>
+                                <div class="detail-info">
+                                    <div class="detail-label">Jam Operasional</div>
+                                    <div class="detail-value">${KONTAK_DATA.operationalHours.display}</div>
+                                </div>
+                            </div>
+                            ${phone.secondary ? `
+                            <div class="detail-item">
+                                <span class="detail-icon">📱</span>
+                                <div class="detail-info">
+                                    <div class="detail-label">Telepon Alternatif</div>
+                                    <div class="detail-value"><a href="tel:${phone.secondary}">${phone.secondary}</a></div>
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Render Social Media
+            function renderSocial() {
+                const social = KONTAK_DATA.social;
+                const socialMap = {
+                    instagram: { icon: '📷', label: 'Instagram' },
+                    facebook: { icon: '👍', label: 'Facebook' },
+                    youtube: { icon: '▶️', label: 'YouTube' },
+                    tiktok: { icon: '🎵', label: 'TikTok' }
+                };
+
+                let html = `
+                    <div class="social-title">🌐 <span>Ikuti</span> Kami</div>
+                    <div class="social-icons">
+                `;
+
+                Object.keys(social).forEach(key => {
+                    if (social[key]) {
+                        const info = socialMap[key] || { icon: '🔗', label: key };
+                        html += `
+                            <a href="${social[key]}" target="_blank" title="${info.label}">
+                                ${info.icon}
+                            </a>
+                        `;
+                    }
+                });
+
+                html += `</div>`;
+                socialSection.innerHTML = html;
+            }
+
+            // ============================================================
+            // LIVE CHAT FUNCTIONS
+            // ============================================================
+            function openChat() {
+                chatModal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                chatInput.focus();
+                // Scroll ke bawah
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+
+            function closeChatModal() {
+                chatModal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+
+            function sendChatMessage() {
+                const message = chatInput.value.trim();
+                if (!message) return;
+
+                // Tampilkan pesan user
+                const userMsg = document.createElement('div');
+                userMsg.className = 'chat-message user';
+                const now = new Date();
+                const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2,
+                '0');
+                userMsg.innerHTML = `${message}<span class="msg-time">${timeStr}</span>`;
+                chatBody.appendChild(userMsg);
+
+                chatInput.value = '';
+                chatBody.scrollTop = chatBody.scrollHeight;
+
+                // Simulasi balasan bot
+                setTimeout(() => {
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'chat-message bot';
+                    const botReplies = [
+                        'Terima kasih atas pesannya! Kami akan segera merespon.',
+                        'Baik, kami catat pertanyaan Anda. Admin akan menghubungi segera.',
+                        'Terima kasih sudah menghubungi JDI KOSKITA. Ada yang bisa kami bantu lagi?',
+                        'Pesan Anda sudah kami terima. Kami akan merespon dalam waktu dekat.'
+                    ];
+                    const randomReply = botReplies[Math.floor(Math.random() * botReplies.length)];
+                    const now2 = new Date();
+                    const timeStr2 = now2.getHours().toString().padStart(2, '0') + ':' + now2.getMinutes().toString()
+                        .padStart(2, '0');
+                    botMsg.innerHTML = `${randomReply}<span class="msg-time">${timeStr2}</span>`;
+                    chatBody.appendChild(botMsg);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }, 1000 + Math.random() * 2000);
+            }
+
+            // ============================================================
+            // EVENT LISTENERS
+            // ============================================================
+
+            // Email Form
+            emailForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Validasi sederhana
+                if (!emailName.value.trim() || !emailAddress.value.trim() || !emailSubject.value || !emailMessage.value
+                    .trim()) {
+                    alert('Mohon lengkapi semua field yang wajib diisi.');
+                    return;
+                }
+
+                // Simulasi pengiriman
+                submitEmail.disabled = true;
+                submitEmail.textContent = '⏳ Mengirim...';
+
+                setTimeout(function() {
+                    submitEmail.disabled = false;
+                    submitEmail.textContent = '✅ Terkirim!';
+                    emailSuccess.classList.add('show');
+
+                    // Reset form setelah 3 detik
+                    setTimeout(function() {
+                        resetEmailForm();
+                        submitEmail.textContent = '📨 Kirim Email';
+                    }, 3000);
+                }, 1500);
+            });
+
+            closeEmailForm.addEventListener('click', function() {
+                emailFormContainer.classList.remove('show');
+                resetEmailForm();
+            });
+
+            // Chat
+            sendChat.addEventListener('click', sendChatMessage);
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
+
+            closeChat.addEventListener('click', closeChatModal);
+
+            chatModal.addEventListener('click', function(e) {
+                if (e.target === chatModal) {
+                    closeChatModal();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && chatModal.classList.contains('show')) {
+                    closeChatModal();
+                }
+                if (e.key === 'Escape' && emailFormContainer.classList.contains('show')) {
+                    emailFormContainer.classList.remove('show');
+                    resetEmailForm();
+                }
+            });
+
+            // ============================================================
+            // HAMBURGER MENU
+            // ============================================================
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    navMenu.classList.toggle('open');
+                });
+
+                navMenu.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 576) {
+                            navMenu.classList.remove('open');
+                        }
+                    });
+                });
+            }
+
+            // ============================================================
+            // EXPOSE FOR CMS
+            // ============================================================
+            window.KontakCMS = {
+                data: KONTAK_DATA,
+                renderAll: function() {
+                    renderAdminStatus();
+                    renderContactCards();
+                    renderInfoGrid();
+                    renderSocial();
+                },
+                updateAdminStatus: function(newStatus) {
+                    Object.assign(KONTAK_DATA.adminStatus, newStatus);
+                    renderAdminStatus();
+                },
+                updateContactCards: function(newCards) {
+                    KONTAK_DATA.contactCards = newCards;
+                    renderContactCards();
+                },
+                updateWhatsApp: function(newWa) {
+                    Object.assign(KONTAK_DATA.whatsapp, newWa);
+                },
+                updateAddress: function(newAddress) {
+                    Object.assign(KONTAK_DATA.address, newAddress);
+                    renderInfoGrid();
+                },
+                updatePhone: function(newPhone) {
+                    Object.assign(KONTAK_DATA.phone, newPhone);
+                    renderInfoGrid();
+                },
+                updateEmail: function(newEmail) {
+                    Object.assign(KONTAK_DATA.email, newEmail);
+                    renderInfoGrid();
+                },
+                updateSocial: function(newSocial) {
+                    Object.assign(KONTAK_DATA.social, newSocial);
+                    renderSocial();
+                },
+                updateOperationalHours: function(newHours) {
+                    Object.assign(KONTAK_DATA.operationalHours, newHours);
+                    renderAdminStatus();
+                    renderInfoGrid();
+                }
+            };
+
+            // ============================================================
+            // INIT
+            // ============================================================
+            renderAdminStatus();
+            renderContactCards();
+            renderInfoGrid();
+            renderSocial();
+
+            console.log('✅ JDI KOSKITA - Kontak CMS Ready');
+            console.log('📞 Data kontak dapat diedit melalui window.KontakCMS');
+            console.log('   Contoh: window.KontakCMS.updateAdminStatus({ online: false })');
+            console.log('   Contoh: window.KontakCMS.updateWhatsApp({ number: "+6281234567899" })');
+
+        })();
+    </script>
+
+</body>
+</html>
